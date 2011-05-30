@@ -17,23 +17,25 @@
 package ru.itx.jetty.handler;
 
 import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 
-public class ExtjsHandler extends AbstractHandler {
+public class ExtjsHandler extends ResourceHandler {
+
+	public ExtjsHandler() {
+		setDirectoriesListed(true);
+		setWelcomeFiles(new String[]{"index.html"});
+		setResourceBase(getClass().getClassLoader().getResource("ru/itx/jetty/handler").toExternalForm());
+	}
 
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
 	throws IOException, ServletException {
-		if (target.equals("/extjs")) {
-			response.setContentType("text/html;charset=utf-8");
-			response.setStatus(HttpServletResponse.SC_OK);
-			baseRequest.setHandled(true);
-			response.getWriter().println(new Date());
+		if (target.startsWith("/extjs")) {
+			super.handle(target, baseRequest, request, response);
 		}
 	}
 }

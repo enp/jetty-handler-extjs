@@ -4,7 +4,7 @@
 	<groupId>ru.itx</groupId>
 	<artifactId>jetty-handler-extjs</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1</version>
+	<version>4.0.1</version>
 	<name>jetty-handler-extjs</name>
 	<url>http://www.itx.ru</url>
 	<developers>
@@ -51,7 +51,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>ru.itx.jetty-handler-extjs.Application</mainClass>
+							<mainClass>ru.itx.jetty.handler.ExtjsApplication</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -60,7 +60,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>ru.itx.jetty-handler-extjs.Application</mainClass>
+					<mainClass>ru.itx.jetty.handler.ExtjsApplication</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
