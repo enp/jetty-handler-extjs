@@ -16,14 +16,21 @@
 	</developers>
 	<licenses>
 		<license>
-			<name>Apache 2</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<name>GPL v3</name>
+			<url>http://www.gnu.org/licenses/gpl.txt</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<dependencies>
+			<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>7.2.2.v20101205</version>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
