@@ -16,8 +16,8 @@
 	</developers>
 	<licenses>
 		<license>
-			<name>GPL v3</name>
-			<url>http://www.gnu.org/licenses/gpl.txt</url>
+			<name>LGPL v3</name>
+			<url>http://www.gnu.org/licenses/lgpl.txt</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
