@@ -29,6 +29,8 @@ import java.io.IOException;
 
 public class ExtjsHandler extends ResourceHandler {
 
+	private String prefix = "/extjs";
+
 	public ExtjsHandler() {
 		setDirectoriesListed(true);
 		setWelcomeFiles(new String[]{"index.html"});
@@ -37,7 +39,7 @@ public class ExtjsHandler extends ResourceHandler {
 
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
 	throws IOException, ServletException {
-		if (target.startsWith("/extjs")) {
+		if (target.startsWith(prefix)) {
 			super.handle(target, baseRequest, request, response);
 		}
 	}

@@ -19,29 +19,28 @@
  */
 package ru.itx.jetty.handler;
 
-import org.eclipse.jetty.server.Handler;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.DefaultHandler;
-import org.eclipse.jetty.server.handler.HandlerList;
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.map.ObjectMapper;
 
-public class ExtjsApplication {
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Writer;
+import java.util.Map;
 
-	public static void main(String[] args) throws Exception {
+public class RestJsonHandler extends RestHandler {
 
-		System.setProperty("org.eclipse.jetty.util.log.DEBUG", "true");
+	private ObjectMapper om = new ObjectMapper();
+	private JsonFactory jf = new JsonFactory();
 
-		final Server server = new Server(8080);
+	protected Map<String,Object> read(InputStream is) throws IOException {
+		return om.readValue(is, Map.class);
+	}
 
-		HandlerList handlers = new HandlerList();
-		handlers.setHandlers(new Handler[] { new RestJsonHandler(), new ExtjsHandler(), new DefaultHandler() });
-		server.setHandler(handlers);
+	protected void write(RestResponce data, Writer writer) throws IOException {
+		om.writeValue(jf.createJsonGenerator(writer), data);
+	}
 
-		server.start();
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-			public void run() {
-				try { server.stop(); } catch (Exception e) { e.printStackTrace(); }
-			}
-		});
-		server.join();
+	protected String getContentType() {
+		return "application/json;charset=utf-8";
 	}
 }
