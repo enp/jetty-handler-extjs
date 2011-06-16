@@ -28,13 +28,17 @@ Ext.onReady(function(){
 		storeId:'storeThings',
 		model: 'modelThings',
 		autoLoad: true,
+		autoSync: true,
 		pageSize: 5,
 		proxy: {
-			type: 'ajax',
+			type: 'rest',
 			url: '/rest/things',
 			reader: {
 				type: 'json',
 				root: 'data'
+			},
+			writer: {
+				type: 'json'
 			}
 		}
 	});
@@ -50,24 +54,66 @@ Ext.onReady(function(){
 			sortableColumns: false,
 			columns: [
 				{text: 'ID', dataIndex: 'id', flex: 2, menuDisabled: true },
-				{text: 'Name', dataIndex: 'name', flex: 4, menuDisabled: true },
+				{text: 'Name', dataIndex: 'name', field: 'textfield', flex: 4, menuDisabled: true },
 				{text: 'Create date', dataIndex: 'createDate', xtype: 'datecolumn', format: 'Y-m-d H:i:s.u T', flex: 3, menuDisabled: true },
 				{text: 'Weight', flex: 2, dataIndex: 'weight', align: 'right', menuDisabled: true }
+			],
+			plugins: [
+				Ext.create('Ext.grid.plugin.RowEditing')
 			],
 			dockedItems: [{
 				xtype: 'pagingtoolbar',
 				store: Ext.data.StoreManager.lookup('storeThings'),
 				dock: 'bottom',
-				displayInfo: true
+				displayInfo: true,
+				items:[{
+					xtype: 'tbseparator'
+				},{
+					id: 'buttonAdd',
+					xtype: 'button',
+					text: 'Add',
+					icon: 'images/add.png',
+					handler: function(){
+						Ext.data.StoreManager.lookup('storeThings').add({});
+					}
+				},{
+					id: 'buttonEdit',
+					xtype: 'button',
+					text: 'Edit',
+					disabled: true,
+					icon: 'images/edit.png',
+					handler: function(){
+						var record = Ext.getCmp('gridThings').getSelectionModel().getSelection();
+						var editor = Ext.getCmp('gridThings').plugins[0];
+						if (record.length > 0)
+							editor.startEdit(record[0], 0);
+					}
+				},{
+					id: 'buttonDelete',
+					xtype: 'button',
+					text: 'Delete',
+					disabled: true,
+					icon: 'images/delete.png',
+					handler: function(){
+						var store = Ext.data.StoreManager.lookup('storeThings');
+						var record = Ext.getCmp('gridThings').getSelectionModel().getSelection();
+						if (record.length > 0) {
+							store.remove(record);
+						}
+					}
+				}]
 			}]
 		}]
 	});
 
 	Ext.getCmp('gridThings').on('selectionchange', function(sm, record) {
-		if (record.length > 0)
-			console.log('Thing with id ['+record[0].get('id')+'] is selected');
-		else
-			console.log('No thing is selected');
+		if (record.length > 0) {
+			Ext.getCmp('buttonEdit').enable();
+			Ext.getCmp('buttonDelete').enable();
+		} else {
+			Ext.getCmp('buttonEdit').disable();
+			Ext.getCmp('buttonDelete').disable();
+		}
 	});
 
 });

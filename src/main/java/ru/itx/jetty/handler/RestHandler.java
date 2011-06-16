@@ -68,7 +68,7 @@ public abstract class RestHandler extends AbstractHandler {
 			Matcher matcher = pattern.matcher(request.getPath());
 			if (matcher.find()) {
 				request.setPath(matcher.group(1));
-				request.setId(Long.parseLong(matcher.group(2)));
+				request.setId(Integer.parseInt(matcher.group(2)));
 			}
 
 			if (request.getMethod().equals("GET")) {

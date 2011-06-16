@@ -79,7 +79,7 @@ public class ExtjsApplication {
 
 	public ExtjsApplication() throws Exception {
 
-		for (int i=0; i<15; i++) {
+		for (int i=0; i<10; i++) {
 			things.add(new Thing());
 			Thread.sleep(3);
 		}
@@ -95,26 +95,47 @@ public class ExtjsApplication {
 			.getResource("ru/itx/jetty/handler/example").toExternalForm());
 
 		RestJsonHandler restJsonHandler = new RestJsonHandler("/rest/things") {
+			private Thing findThing(Integer id) {
+				for (Thing thing : things)
+					if (thing.getId() == id)
+						return thing;
+				return null;
+			}
 			protected void get(RestRequest request, RestResponce responce) throws Exception {
 				if (request.getId() == null) {
 					Object data;
 					try {
 						int start = Integer.parseInt(request.getParam("start").toString());
 						int limit = Integer.parseInt(request.getParam("limit").toString());
-						data = things.subList(start, start+limit);
+						int end = Math.min(start+limit, things.size());
+						data = things.subList(start, end);
 						responce.setTotal(things.size());
 					} catch (Exception e) {
 						data = things;
 					}
 					responce.setData(data);
 				} else {
-					for (Thing thing : things)
-						if (thing.getId() == request.getId()) {
-							responce.setData(thing);
-							return;
-						}
-					responce.setMessage("Thing is not found");
+					Thing thing = findThing(request.getId());
+					if (thing != null)
+						responce.setData(thing);
 				}
+			}
+			protected void post(RestRequest request, RestResponce responce) throws Exception {
+				Thing thing = new Thing();
+				things.add(thing);
+				responce.setData(thing);
+			}
+			protected void put(RestRequest request, RestResponce responce) throws Exception {
+				Thing thing = findThing(request.getId());
+				if (thing != null) {
+					thing.setName(request.getParam("name").toString());
+					responce.setData(thing);
+				}
+			}
+			protected void delete(RestRequest request, RestResponce responce) throws Exception {
+				Thing thing = findThing(request.getId());
+				if (thing != null)
+					things.remove(thing);
 			}
 		};
 
