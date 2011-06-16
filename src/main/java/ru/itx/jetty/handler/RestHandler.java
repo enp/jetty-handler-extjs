@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 
 public abstract class RestHandler extends AbstractHandler {
 
-	private Pattern pattern = Pattern.compile("^(.+)/(\\d+)$");
+	private Pattern pattern = Pattern.compile("^(.*)/(\\d+)$");
 	private String prefix = "/rest/";
 
 	protected abstract Map<String,Object> read(InputStream is) throws IOException;
@@ -43,6 +43,16 @@ public abstract class RestHandler extends AbstractHandler {
 	protected abstract void write(RestResponce data, Writer writer) throws IOException;
 
 	protected abstract String getContentType();
+
+	public RestHandler() {}
+
+	public RestHandler(String prefix) {
+		this.prefix = prefix;
+	}
+
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
 
 	public void handle(String target, Request baseRequest,
 		HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException, ServletException {
@@ -54,12 +64,11 @@ public abstract class RestHandler extends AbstractHandler {
 
 			request.setMethod(httpRequest.getMethod());
 
-			Matcher matcher = pattern.matcher(target.replace(prefix,""));
+			request.setPath(target.replace(prefix,""));
+			Matcher matcher = pattern.matcher(request.getPath());
 			if (matcher.find()) {
 				request.setPath(matcher.group(1));
-				request.setId(Integer.parseInt(matcher.group(2)));
-			} else {
-				request.setPath(target);
+				request.setId(Long.parseLong(matcher.group(2)));
 			}
 
 			if (request.getMethod().equals("GET")) {

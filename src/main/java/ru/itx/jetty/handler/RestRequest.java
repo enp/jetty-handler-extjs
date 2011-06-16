@@ -14,12 +14,13 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with jetty-hahdler-extjs. If not, see <http://www.gnu.org/licenses/>.
+ * aInteger with jetty-hahdler-extjs. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 package ru.itx.jetty.handler;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class RestRequest {
@@ -27,16 +28,7 @@ public class RestRequest {
 	private String method;
 	private String path;
 	private Integer id;
-	private Map<String,Object> params;
-
-	public RestRequest() {}
-
-	public RestRequest(String method, String path, Integer id, Map<String,Object> params) {
-		this.method = method;
-		this.path = path;
-		this.id = id;
-		this.params = params;
-	}
+	private Map<String,Object> params = new HashMap<String,Object>();
 
 	public String getMethod() {
 		return method;
@@ -64,6 +56,10 @@ public class RestRequest {
 
 	public Map<String, Object> getParams() {
 		return Collections.unmodifiableMap(params);
+	}
+
+	public Object getParam(String param) {
+		return params.get(param);
 	}
 
 	public void setParams(Map<String, Object> params) {

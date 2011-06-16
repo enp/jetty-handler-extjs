@@ -32,6 +32,12 @@ public class RestJsonHandler extends RestHandler {
 	private ObjectMapper om = new ObjectMapper();
 	private JsonFactory jf = new JsonFactory();
 
+	public RestJsonHandler() {}
+
+	public RestJsonHandler(String prefix) {
+		super(prefix);
+	}
+
 	protected Map<String,Object> read(InputStream is) throws IOException {
 		return om.readValue(is, Map.class);
 	}

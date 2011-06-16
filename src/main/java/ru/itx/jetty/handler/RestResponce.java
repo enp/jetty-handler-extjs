@@ -19,37 +19,12 @@
  */
 package ru.itx.jetty.handler;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 public class RestResponce {
 
 	private boolean success = true;
-	private Map<String,Object> data = new HashMap<String,Object>();
+	private Object data;
+	private Integer total;
 	private String message;
-
-	public RestResponce() {}
-
-	public RestResponce(boolean success, Map<String,Object> data, String message) {
-		this.success = success;
-		this.data = data;
-		this.message = message;
-	}
-
-	public RestResponce(Map<String, Object> data, String message) {
-		this.data = data;
-		this.message = message;
-	}
-
-	public RestResponce(Map<String, Object> data) {
-		this.data = data;
-	}
-
-	public RestResponce(String message) {
-		this.success = false;
-		this.message = message;
-	}
 
 	public boolean isSuccess() {
 		return success;
@@ -59,12 +34,20 @@ public class RestResponce {
 		this.success = success;
 	}
 
-	public Map<String,Object> getData() {
-		return Collections.unmodifiableMap(data);
+	public Object getData() {
+		return data;
 	}
 
-	public void setData(Map<String,Object> data) {
-		this.data.putAll(data);
+	public void setData(Object data) {
+		this.data = data;
+	}
+
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
 	}
 
 	public String getMessage() {
@@ -76,6 +59,6 @@ public class RestResponce {
 	}
 
 	public String toString() {
-		return "RestResponce {"+success+":"+data+":"+message+"}";
+		return "RestResponce {"+success+":"+data+":"+total+":"+message+"}";
 	}
 }
