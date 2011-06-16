@@ -56,7 +56,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>ru.itx.jetty.handler.ExtjsApplication</mainClass>
+							<mainClass>ru.itx.jetty.handler.ExtjsExample</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -65,7 +65,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>ru.itx.jetty.handler.ExtjsApplication</mainClass>
+					<mainClass>ru.itx.jetty.handler.ExtjsExample</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>

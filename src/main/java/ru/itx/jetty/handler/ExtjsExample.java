@@ -29,7 +29,7 @@ import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class ExtjsApplication {
+public class ExtjsExample {
 
 	private class Thing {
 
@@ -77,7 +77,7 @@ public class ExtjsApplication {
 
 	private Server server;
 
-	public ExtjsApplication() throws Exception {
+	public ExtjsExample() throws Exception {
 
 		for (int i=0; i<10; i++) {
 			things.add(new Thing());
@@ -154,6 +154,6 @@ public class ExtjsApplication {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new ExtjsApplication();
+		new ExtjsExample();
 	}
 }

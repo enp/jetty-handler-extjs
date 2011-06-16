@@ -1,4 +1,10 @@
-jetty-handler-extjs is intended for use with embedded jetty
-to avoid copying all extjs source to project source tree.
-It implements ExtjsHandler extends ResourceHandler to handle
-all requests starts with /extjs and ExtjsApplication example.
+jetty-handler-extjs is intended for use with embedded jetty to avoid copying
+all extjs source to project source tree.
+
+It implements:
+
+ * ExtjsHandler extends ResourceHandler to handle all requests starts with /extjs
+ * Abstract RestHandler to handle requests from Ext.data.proxy.Rest
+ * RestJsonHandler to encode/decode request/responces in JSON format
+
+See this features in server-side ExtjsExample.java and client-side example.js
